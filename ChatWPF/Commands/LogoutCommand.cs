@@ -1,7 +1,6 @@
 ﻿using ChatDomain;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +8,14 @@ using System.Windows.Input;
 
 namespace ChatWPF
 {
-    public class LoginCommand : ICommand
+    public class LogoutCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
         private readonly ChatViewModel _viewModel;
         private readonly SignalRChatService _chatService;
 
-        public LoginCommand(ChatViewModel viewModel, SignalRChatService chatService)
+        public LogoutCommand(ChatViewModel viewModel, SignalRChatService chatService)
         {
             _viewModel = viewModel;
             _chatService = chatService;
@@ -32,15 +31,8 @@ namespace ChatWPF
             try
             {
                 string name = parameter as string;
-                List<User> users = new List<User>();//todo
-                users = await _chatService.LoginAsync(name);//возарвщает всех пользователей
-                _viewModel.UserMode = UserModes.Chat;
 
-                if (users != null)
-                {
-                    _viewModel.Participants = new ObservableCollection<Participant>();
-                    users.ForEach(u => _viewModel.Participants.Add(new Participant { Name = u.Name }));
-                }
+                await _chatService.LogoutAsync(name);
 
             }
             catch (Exception)

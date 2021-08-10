@@ -20,7 +20,7 @@
         <Grid Grid.Row="0"
               Background="#2793c4">
 
-            <TextBlock Text="Users"
+            <TextBlock Text="Chats"
                        TextAlignment="Center"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -136,11 +136,11 @@
                             <Border Name="MessageBorder" 
                                     MinHeight="40" 
                                     MinWidth="280" 
-                                    BorderThickness="2" 
-                                    Background="#EFEBE9" 
+                                    BorderThickness="3" 
+                                    Background="LightGray" 
                                     Margin="10,0,60,10" 
                                     BorderBrush="#BCAAA4" 
-                                    CornerRadius="10" 
+                                    CornerRadius="12" 
                                     SnapsToDevicePixels="True"
                                     HorizontalAlignment="Left">
                                 

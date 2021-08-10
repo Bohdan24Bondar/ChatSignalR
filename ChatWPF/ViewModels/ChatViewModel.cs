@@ -11,15 +11,14 @@ namespace ChatWPF
 {
     public class ChatViewModel : BaseViewModel
     {
-        private TaskFactory ctxTaskFactory;
+        
         public ObservableCollection<ChatMessage> Messages { get; }
 
         public ICommand SendMessage { get; }
 
-        public ICommand LoginCom
-        {
-            get;
-        }
+        public ICommand LoginCom { get; }
+
+        public ICommand LogoutCom { get; }
 
         private ObservableCollection<Participant> _participants;
         public ObservableCollection<Participant> Participants
@@ -78,11 +77,34 @@ namespace ChatWPF
             Messages = new ObservableCollection<ChatMessage>();
             SendMessage = new SendMessageCommand(this, chatService);
             LoginCom = new LoginCommand(this, chatService);
+            LogoutCom = new LogoutCommand(this, chatService);
             _chatService = chatService;
-            _chatService.MessageRecived += ChatService_MessageRecived;//todo
+            _chatService.MessageRecived += ChatService_MessageRecived;
             _chatService.LoggedIn += _chatService_LoggedIn;
+            _chatService.LoggedOut += _chatService_LoggedOut;
             _author = string.Empty;
-            ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void _chatService_LoggedOut(string name)
+        {
+            Participant loggedOutUser = Participants.FirstOrDefault(p => string.Equals(p.Name, name));
+
+            if (loggedOutUser != null)
+            {
+                ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
+
+                foreach (var u in Participants)
+                {
+                    if (u.Name == name)
+                    {
+                        continue;
+                    }
+
+                    participants.Add(u);
+                }
+
+                Participants = participants;
+            }
         }
 
         //private void _chatService_LoggedIn(User currentUser)

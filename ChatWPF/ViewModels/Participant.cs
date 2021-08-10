@@ -12,12 +12,12 @@ namespace ChatWPF
     {
         public string Name { get; set; }
 
-        private bool _isLoggedIn = true;
-        public bool IsLoggedIn
-        {
-            get { return _isLoggedIn; }
-            set { _isLoggedIn = value; OnPropertyChanged(); }
-        }
+        //private bool _isLoggedIn = true;
+        //public bool IsLoggedIn
+        //{
+        //    get { return _isLoggedIn; }
+        //    set { _isLoggedIn = value; OnPropertyChanged(); }
+        //}
 
         public ObservableCollection<ChatMessage> Chatter { get; set; }
 

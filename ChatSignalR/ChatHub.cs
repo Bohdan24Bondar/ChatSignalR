@@ -50,5 +50,17 @@ namespace ChatSignalR
 
             return null;
         }
+
+        public void Logout(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                User client = new User();
+                ChatClients.TryRemove(name, out client);
+                Clients.Others.SendAsync("RemoveUser", name);
+                Console.WriteLine($"-- {name} logged out");
+            }
+        }
+
     }
 }
