@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ChatWPF"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:ChatViewModel}"
-        Title="MainWindow" Height="650" Width="600">
+        Title="MainWindow" Height="650" Width="500">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding LogoutCom}" CommandParameter="{Binding UserName}"/>
