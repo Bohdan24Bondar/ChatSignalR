@@ -3,9 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:ChatWPF"
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="700">
+             d:DesignHeight="650" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <Style x:Key="_sendButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="#00000000">
+                            <materialDesign:PackIcon Name="SendIcon" Kind="Send" SnapsToDevicePixels="True"
+                                                     Foreground="{TemplateBinding Foreground}"
+                                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                     Margin="{TemplateBinding Padding}" Width="Auto" Height="Auto"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" TargetName="SendIcon" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Foreground" TargetName="SendIcon" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.23"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid Background="#2793c4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -20,7 +61,7 @@
         <Grid Grid.Row="0"
               Background="#2793c4">
 
-            <TextBlock Text="Chats"
+            <TextBlock Text="{Binding UserName}"
                        TextAlignment="Center"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -87,14 +128,21 @@
               Grid.Row="0" 
               Background="#2793c4">
 
-            <TextBlock Grid.Column="1"
+            <!--<TextBlock Grid.Column="1"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Text="{Binding SelectedParticipant.Name}"
                        Foreground="Black"
                        FontWeight="DemiBold"
                        FontSize="24"
-                       />
+                       />-->
+
+            <materialDesign:PackIcon Kind="AccountCircle" 
+                                     Width="100"
+                                     Height="100" 
+                                     HorizontalAlignment="Center" 
+                                     VerticalAlignment="Center"
+                                     />
 
         </Grid>
 
@@ -102,12 +150,21 @@
               Grid.Column="1">
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="5*"/>
-                <RowDefinition Height="2*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <ScrollViewer Grid.Row="0" 
+            <TextBlock Grid.Row="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Text="{Binding SelectedParticipant.Name}"
+                       Foreground="Black"
+                       FontWeight="DemiBold"
+                       FontSize="30"
+                       />
+
+            <ScrollViewer Grid.Row="1" 
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       FontSize="16">
@@ -198,7 +255,7 @@
             </ScrollViewer>
 
             <TextBox x:Name="MessageFild" 
-                     Grid.Row="1"
+                     Grid.Row="2"
                      FontSize="20"
                      FontWeight="Bold"
                      FontFamily="Dodo Casals"
@@ -211,20 +268,19 @@
             <Grid Grid.Row="2">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="1.5*"/>
                 </Grid.ColumnDefinitions>
 
                 <Button 
                     Grid.Column="1"
-                    Margin="5"
+                    Margin="15"
                     Content="Send"
                     FontSize="24"
                     FontWeight="Bold"
                     Command="{Binding SendMessage}"
                     CommandParameter="{Binding ElementName=MessageFild, Path=Text}"
-                    Style="{StaticResource _buttonStyle}"
+                    Style="{StaticResource _sendButtonStyle}"
                     >
                 </Button>
 
