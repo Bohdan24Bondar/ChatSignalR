@@ -35,10 +35,10 @@ namespace ChatWPF
                 await _chatService.LogoutAsync(name);
 
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
         }
     }
 }
